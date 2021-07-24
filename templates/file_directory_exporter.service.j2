@@ -1,0 +1,19 @@
+# File and Directory Exporter for Prometheus Systemd-Unit
+
+[Unit]
+Description=File and Directory Exporter for Prometheus
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User={{ file_directory_exporter_user }}
+Group={{ file_directory_exporter_group }}
+WorkingDirectory={{ file_directory_exporter_working_dir }}/
+ExecStart={{ file_directory_exporter_working_dir }}/exporter.py {{ file_directory_exporter_working_dir }}/config.json
+Restart=always
+Environment=USER={{ file_directory_exporter_user }} HOME={{ file_directory_exporter_working_dir }}/
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,7 @@
+---
+# handlers file for ansible-role-file-directory-exporter
+- name: "restart_file_directory_exporter"
+  service:
+    name: file_directory_exporter
+    state: restarted
+    enabled: yes

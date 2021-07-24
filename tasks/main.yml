@@ -1,0 +1,42 @@
+---
+# tasks file for ansible-role-file-directory-exporter
+- name: Create Working Dir
+  file:
+    path: '{{ file_directory_exporter_working_dir }}'
+    state: directory
+    mode: 02771
+    owner: '{{ file_directory_exporter_user }}'
+    group: '{{ file_directory_exporter_group }}'
+
+- name: Copy Files
+  copy:
+    src: 'files/'
+    dest: '{{ file_directory_exporter_working_dir }}/'
+    mode: 0755
+    owner: '{{ file_directory_exporter_user }}'
+    group: '{{ file_directory_exporter_group }}'
+  notify: restart_file_directory_exporter
+
+- name: Install config
+  template:
+    src: templates/config.json.j2
+    dest: '{{ file_directory_exporter_working_dir }}/config.json'
+    mode: 0644
+    owner: '{{ file_directory_exporter_user }}'
+    group: '{{ file_directory_exporter_group }}'
+  notify: restart_file_directory_exporter
+
+- name: Install service
+  template:
+    src: templates/file_directory_exporter.service.j2
+    dest: '/lib/systemd/system/file_directory_exporter.service'
+    mode: 0755
+    owner: root
+    group: root
+  notify: restart_file_directory_exporter
+
+- name: Ensure service is enabled and started
+  service:
+    name: file_directory_exporter
+    state: started
+    enabled: yes

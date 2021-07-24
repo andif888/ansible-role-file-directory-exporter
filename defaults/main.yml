@@ -1,0 +1,22 @@
+---
+# defaults file for ansible-role-file-directory-exporter
+file_directory_exporter_working_dir: "/opt/file_directory_exporter"
+
+file_directory_exporter_user: root
+file_directory_exporter_group: root
+
+file_directory_exporter_listen_address: 0.0.0.0
+file_directory_exporter_listen_port: 9101
+
+file_directory_exporter_files:
+  - "/etc/fstab"
+  - "/etc/network/interfaces"
+  - "/etc/baum"
+  - "/root/test"
+  - "/etc/"
+
+file_directory_exporter_directories:
+  - "/etc"
+  - "/home/pi/"
+  - "/app"
+

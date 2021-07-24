@@ -1,0 +1,14 @@
+{
+
+    "file_exporter_config": {
+      "age": true,
+      "size": true,
+      "ipaddress": "{{ file_directory_exporter_listen_address }}",
+      "port": {{ file_directory_exporter_listen_port }}
+    },
+  
+    "files": [{{ file_directory_exporter_files | map("to_json") | join(", ") }}],
+  
+    "directories": [{{ file_directory_exporter_directories | map("to_json") | join(", ") }}]
+  
+  }
